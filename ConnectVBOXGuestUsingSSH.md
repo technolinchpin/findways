@@ -2,7 +2,7 @@
 From VBOX Network settings
   * Select Adapter 1 ,and use NAT Connection
   * Select Advanced/Port forward option
-  * Add new portfrowrd rule
+  * Add new port Forward rule
     * Name : SSH
     * Protocol : TCP
     * HOST PORT  : 2281
@@ -12,6 +12,6 @@ From VBOX Network settings
      * sudo lsof  -i -n -P
         * check to see the sshd is listening on port 22
 
-#### Window Host 
+#### Access from Windows HOST 
   * Use WinSCP or Putty
   * SSH  to 127.0.0.1 
