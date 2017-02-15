@@ -11,6 +11,7 @@ From VBOX Network settings
      * If not ,Start SSH sever in Ubuntu 16 : systemctl start sshd
      * sudo lsof  -i -n -P
         * check to see the sshd is listening on port 22
-Window Host 
+
+#### Window Host 
   * Use WinSCP or Putty
   * SSH  to 127.0.0.1 
