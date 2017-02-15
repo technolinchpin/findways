@@ -1,6 +1,6 @@
 
 
-## How to Setup ELK in docker container to setup a Centralized Log Management Solution
+## Centralized Log Management Solution with ELK docker container.
 
 ELK compose of Elastic Search , Logstash and Kibana as a unified solution to collect the logs from distributed sources and centrize the log managment. By runnign ELK in docker allows to run multiple instances ELK connecting to remote targets over Syslog channel to collect the logs and share them to Kibana dashboard. This approach can be very useful in setups where multiple embedded targets are connected to an automated test server which performs tests on the remote boards and the log outputs from the tests can be consolidated and analyzed. The powerful search funtionality of hte Elastic allows mining of test and can search and patterns of keywords in the log [like "reset" ,system out of memory etc...] 
 
