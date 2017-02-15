@@ -49,20 +49,20 @@ port of the elk container and forward them to the 9200 port of the container to 
 
 **tcp.conf**
 ------------
-osboxes@osboxes:/data/logstash$ cat tcp.conf 
-input {
-	tcp {	port => 5000	}
-}
+	osboxes@osboxes:/data/logstash$ cat tcp.conf 
+	input {
+		tcp {	port => 5000	}
+	}	
 	
 
--- Add your filters / logstash plugins configuration here
+	-- Add your filters / logstash plugins configuration here
 	
-output {
-	elasticsearch { hosts => ["localhost:9200"] }
-	stdout { codec => rubydebug }
+	output {
+		elasticsearch { hosts => ["localhost:9200"] }
+		stdout { codec => rubydebug }
 
 	
-}
+	}
 Now what this declares is a tcp input port @5000 and output to localhost:9200 the elasticsearch
 
 Now we can search whether someone is listening on the port 5000
@@ -73,9 +73,9 @@ tcp6       0      0 :::5000                 :::*                    LISTEN
 With now elk running ,try to do a bulk data write to 5000 using nc
 
 
-  126  nc localhost 5000 < /var/log/dpkg.log
-  127  nc localhost 5000 < /var/log/Xorg.0.log
-  128  cat /var/log/Xorg.0.log
+  	126  nc localhost 5000 < /var/log/dpkg.log
+  	127  nc localhost 5000 < /var/log/Xorg.0.log
+  	128  cat /var/log/Xorg.0.log
 
 This now shows the data is written to logstash
 
@@ -86,30 +86,30 @@ logs over tcp/udp @ default 514. To make this functional enable the streaming in
 configuring the /etc/syslog.conf
 
 -----
-osboxes@osboxes:/etc/rsyslog.d$ cat /etc/rsyslog.conf
-#  /etc/rsyslog.conf	Configuration file for rsyslog.
-#
-#			For more information see
-#			/usr/share/doc/rsyslog-doc/html/rsyslog_conf.html
-#
-#  Default logging rules can be found in /etc/rsyslog.d/50-default.conf
+	osboxes@osboxes:/etc/rsyslog.d$ cat /etc/rsyslog.conf
+	#  /etc/rsyslog.conf	Configuration file for rsyslog.
+	#
+	#			For more information see
+	#			/usr/share/doc/rsyslog-doc/html/rsyslog_conf.html
+	#
+	#  Default logging rules can be found in /etc/rsyslog.d/50-default.conf
 
 
-#################
-#### MODULES ####
-#################
+	#################
+	#### MODULES ####
+	#################
 
-module(load="imuxsock") # provides support for local system logging
-module(load="imklog")   # provides kernel logging support
-#module(load="immark")  # provides --MARK-- message capability
+	module(load="imuxsock") # provides support for local system logging
+	module(load="imklog")   # provides kernel logging support
+	#module(load="immark")  # provides --MARK-- message capability
 
-# provides UDP syslog reception
-module(load="imudp")
-input(type="imudp" port="514")
+	# provides UDP syslog reception
+	module(load="imudp")
+	input(type="imudp" port="514")
 
-# provides TCP syslog reception
-module(load="imtcp")
-input(type="imtcp" port="514")
+	# provides TCP syslog reception
+	module(load="imtcp")
+	input(type="imtcp" port="514")
 
 
 ==========================
@@ -117,16 +117,16 @@ Restart systemctl restart rsyslog
 
 ---------------------------
 
-Oct 14 13:18:19 osboxes docker/0098bc85e1cd[9551]: This is a test
-root@osboxes:/etc# sudo docker run -t -d  --log-driver=syslog --log-opt syslog-address=tcp://localhost:514 ubuntu  echo "This is a test 123"
-e089853aae03b24907154285b19b416c0099ff3859511a0faeb9fef295eb4274
-root@osboxes:/etc# cat /var/log/syslog | grep This
+	Oct 14 13:18:19 osboxes docker/0098bc85e1cd[9551]: This is a test
+	root@osboxes:/etc# sudo docker run -t -d  --log-driver=syslog --log-opt syslog-address=tcp://localhost:514 ubuntu  echo "This 		is a test 123"
+	e089853aae03b24907154285b19b416c0099ff3859511a0faeb9fef295eb4274
+	root@osboxes:/etc# cat /var/log/syslog | grep This
 
-Oct 14 13:16:45 localhost docker/1c236792e21e[9551]: This is a test#015
-Oct 14 13:18:19 osboxes docker/0098bc85e1cd[9551]: This is a test
-Oct 14 13:22:32 localhost docker/021aa50ce718[9551]: message repeated 2 times: [ This is a test#015]
-Oct 14 13:25:06 localhost docker/e089853aae03[9551]: This is a test 123#015
-root@osboxes:/etc# 
+	Oct 14 13:16:45 localhost docker/1c236792e21e[9551]: This is a test#015
+	Oct 14 13:18:19 osboxes docker/0098bc85e1cd[9551]: This is a test
+	Oct 14 13:22:32 localhost docker/021aa50ce718[9551]: message repeated 2 times: [ This is a test#015]
+	Oct 14 13:25:06 localhost docker/e089853aae03[9551]: This is a test 123#015
+	root@osboxes:/etc# 
 
 ===See all the logs from teh docker containers.....
 
