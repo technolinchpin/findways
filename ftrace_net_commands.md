@@ -3,7 +3,7 @@
 
  1. List all trace options
  
-	trace-cmd list
+ 	trace-cmd list
    
  2. Check the function do_IRQ is availble for tracing
  
